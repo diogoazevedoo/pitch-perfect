@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { OpenAI } from 'openai'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey:
+    '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',
 })
 
 const analyzeTranscription = async (transcription: string) => {
