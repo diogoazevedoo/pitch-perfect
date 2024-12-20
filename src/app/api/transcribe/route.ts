@@ -1,4 +1,4 @@
-import { createReadStream } from 'fs'
+import { createReadStream, writeFileSync } from 'fs'
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import path from 'path'
@@ -42,13 +42,13 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const filePath = path.join(__dirname, 'audio.wav')
+  // Store the file in the /tmp directory
+  const tmpFilePath = path.join('/tmp', 'audio.wav')
   const buffer = Buffer.from(await file.arrayBuffer())
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require('fs').writeFileSync(filePath, buffer)
+  writeFileSync(tmpFilePath, buffer)
 
   try {
-    const transcription = await transcribe(filePath, language)
+    const transcription = await transcribe(tmpFilePath, language)
     return NextResponse.json({ transcription })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
