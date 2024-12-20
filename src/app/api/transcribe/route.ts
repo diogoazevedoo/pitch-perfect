@@ -49,7 +49,8 @@ export async function POST(req: NextRequest) {
   try {
     const transcription = await transcribe(filePath, language)
     return NextResponse.json({ transcription })
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
